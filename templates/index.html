@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+
+<html lang="">
+
+<head>
+<title>Foxclore</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<link href="../static/layout/styles/layout.css" rel="stylesheet" type="text/css" media="all">
+<link rel="shortcut icon" type="image/x-icon" href="../static/images/logo.png" />
+<script src="https://kit.fontawesome.com/5203ee5d80.js" crossorigin="anonymous"></script>
+</head>
+
+<style>
+  article {
+    margin: 0;
+    max-width: 100% !important;
+  }
+  .container_main {
+	display: block;
+	z-index: -1;
+	background-color :transparent;
+  width: 100%;
+  overflow-y: scroll;
+  height: 300px;
+}
+.container_main .container_item {
+  background-color:white;
+  padding: 10px;
+  margin-bottom: 20px;
+  color: black;
+  padding-left: 20px;
+  font-size: 14px;
+  border-radius: 30px;
+}
+
+.container_main::-webkit-scrollbar {
+  display: none;
+}
+
+.container_card {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  flex-direction: row;
+}
+
+#buttons:hover {
+  color: #ffe69c;
+}
+
+@media only screen and (max-width: 600px) {
+  .container_card {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  flex-direction: row;
+}
+}
+.col_card_content {
+  padding-left: 60px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-weight: 500;
+}
+.card {
+  background-color :azure ;
+  border-radius: 10px;
+  width: 360px;
+  display: flex;
+  margin-bottom: 20px;
+  align-items: center;
+}
+.card_photo img {
+  width: 150px !important;
+  height: 150px !important;
+  object-fit: cover;
+}
+.card_name {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-size: 24px;
+}
+
+</style>
+
+<body id="top">
+
+<div class="bgded overlay" style="background-image:url('../static/images/demo/backgrounds/back.png');"> 
+
+  <header id="header" class="hoc clear"> 
+
+    <div id="logo" class="one_quarter first">
+      <h1><a href="index.html">Foxclore</a></h1>
+      <p>Placerat sem hendrerit</p>
+    </div>
+    <div class="three_quarter">
+      <ul class="nospace clear">
+        <li class="one_third first">
+          <div class="block clear"><a href="#"><i class="fas fa-phone"></i></a> <span><strong>Give us a call:</strong> +00 (123) 456 7890</span></div>
+        </li>
+        <li class="one_third">
+          <div class="block clear"><a href="#"><i class="fas fa-envelope"></i></a> <span><strong>Send us a mail:</strong> support@domain.com</span></div>
+        </li>
+        <li class="one_third">
+          <div class="block clear"><a href="#"><i class="fas fa-clock"></i></a> <span><strong> Mon. - Sat.:</strong> 08.00am - 18.00pm</span></div>
+        </li>
+      </ul>
+    </div>
+
+  </header>
+
+  <section id="navwrapper" class="hoc clear"> 
+
+    <nav id="mainav">
+      <ul class="clear">
+        <li class="active"><a href="index.html">Home</a></li>
+        <li><a class="drop" href="#">Pages</a>
+          <ul>
+            <li><a href="pages/gallery.html">Gallery</a></li>
+            <li><a href="pages/full-width.html">Full Width</a></li>
+            <li><a href="pages/sidebar-left.html">Sidebar Left</a></li>
+            <li><a href="pages/sidebar-right.html">Sidebar Right</a></li>
+            <li><a href="pages/basic-grid.html">Basic Grid</a></li>
+            <li><a href="pages/font-icons.html">Font Icons</a></li>
+          </ul>
+        </li>
+        <li><a class="drop" href="#">Dropdown</a>
+          <ul>
+            <li><a href="#">Level 2</a></li>
+            <li><a class="drop" href="#">Level 2 + Drop</a>
+              <ul>
+                <li><a href="#">Level 3</a></li>
+                <li><a href="#">Level 3</a></li>
+                <li><a href="#">Level 3</a></li>
+              </ul>
+            </li>
+            <li><a href="#">Level 2</a></li>
+          </ul>
+        </li>
+        <li><a href="{% url 'account_logout' %}">Log out</a></li>
+        <li><a href="#">Link Text</a></li>
+        <li><a href="#">Link Text</a></li>
+        <li><a href="#">Long Link Text</a></li>
+      </ul>
+    </nav>
+
+    <div id="searchform">
+      <div>
+        <form action="{% url 'home' %}">
+          <fieldset>
+            <legend>Quick Search:</legend>
+            <input name="search" type="text" placeholder="Enter search term&hellip;">
+            <button type="submit"><i class="fas fa-search"></i></button>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+
+  </section>
+
+  <div id="pageintro" class="hoc clear"> 
+
+    <article>
+      <div class="container_main">
+        {% for order_item in order_items %} 
+            <div class="container_item"><img src="{{ order_item.item.image.url }}" style="width: 25px; margin-right: 15px;">{{ order_item.quantity }} of {{ order_item.item.name }} with total value of {{ order_item.total_value }} Kcal <a href="{% url 'remove_from_calc' order_item.item.slug %}" style="float: right; margin-right: 20px; transition: 0.5s;" id="buttons"><i class="fas fa-trash"></i></a> <a href="{% url 'remove_single_item_from_calc' order_item.item.slug %}" style="float: right; margin-right: 50px; transition: 0.5s;" id="buttons"><i class="fas fa-minus"></i></a><a href="{% url 'add_to_calc' order_item.item.slug %}" style="float: right; margin-right: 50px; transition: 0.5s;" id="buttons"><i class="fas fa-plus"></i></a></div>
+          {% empty %}
+            Ur list of food is empty
+        {% endfor %}
+      </div>
+      Total value : {{ total }} Kcal
+    </article>
+
+  </div>
+
+</div>
+
+<div class="wrapper row3">
+  <main class="hoc container clear"> 
+    <div class="container_card">
+      {% for item in items %}
+      <div class="card">
+        <div class="col_card">
+          <div class="card_photo"><a class="imgover" href="{{ item.add_to_calc_url }}"><img src="{{ item.image.url }}" alt="" style="width: 400px; height: 200px; border-radius: 5px;"></a></div>
+        </div>
+        
+        <div class="col_card col_card_content">
+          <div class="card_name">{{ item.name }}</div>
+          <div class="card_content">
+            <p>{{ item.value }} Kcal</p>
+            <hr>
+            <a href="{{ item.remove_from_calc }}">Remove</a>
+          </div>
+        </div>
+      
+      </div>
+      {% endfor %}
+    </div>
+
+    <!-- / main body -->
+    <div class="clear"></div>
+  </main>
+</div>
+
+<a id="backtotop" href="#top"><i class="fas fa-chevron-up"></i></a>
+<!-- JAVASCRIPTS -->
+<script src="../static/layout/scripts/jquery.min.js"></script>
+<script src="../static/layout/scripts/jquery.backtotop.js"></script>
+<script src="../static/layout/scripts/jquery.mobilemenu.js"></script>
+</body>
+</html>
